@@ -1,6 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Input, InputNoBorder, WaveBackground } from "../../shared/ui";
 import { NavBar, TekaWidget } from "../../widgets";
+import StoryService from "../../services/StoriesService";
+import data from "./data";
+import AuthService from "../../services/AuthService";
 import styles from "./style.module.scss";
 import {
   atsign,
@@ -22,8 +25,8 @@ export const Profile = () => {
   const swapstate = () => {
     setVisible(!visible);
   };
-  const email = useSelector((state) => state.user.email);
-  const password = useSelector((state) => state.user.password);
+  const email = useSelector((state) => state.user.info.email);
+  const password = useSelector((state) => state.user.info.password);
   const setEmail = (value) => {
     dispatch({ type: "SET_EMAIL", email: value });
   };
@@ -32,6 +35,9 @@ export const Profile = () => {
   };
   const setPhoto = (value) => {
     dispatch({ type: "SET_PHOTO", photo: value });
+  };
+  const setAuth = (value) => {
+    dispatch({ type: "SET_AUTH", isAuth: value });
   };
   const [flag, setFlag] = useState(false); // длина массива с моими местами
   const nickname = useSelector((state) => state.user.info.username);
@@ -48,7 +54,17 @@ export const Profile = () => {
   };
 
   const [isDisabled, setIsDisabled] = useState(true);
-
+  const logout = async () => {
+    try {
+      const responce = await AuthService.logout();
+      console.log(responce);
+      localStorage.removeItem("token");
+      setAuth(false);
+      setEmail("")
+    } catch (e) {
+      console.log(e.responce?.data?.message);
+    }
+  };
   const handleFileChange = (e) => {
     const file = e.target.files[0]; // схватили выбранный файл
     if (file) {
@@ -63,8 +79,31 @@ export const Profile = () => {
     types: ["email", "password"],
     autocomplete: ["off", "current-password"],
   };
+  const declareOrganizations = async () => {
+    for (let i = 0; i < data.length; i++) {
+      const responce = await StoryService.createOrg(
+        data[i].avatar,
+        data[i].name,
+        data[i].type,
+        data[i].address
+      );
+      console.log(responce);
+    }
+  };
+
+  useEffect(() => {
+    declareOrganizations();
+  }, []);
   return (
     <WaveBackground>
+      <button
+        onClick={() => {
+          logout();
+        }}
+        className={styles.logoutButton}
+      >
+        logout
+      </button>
       <div className={styles.wrapper}>
         <input
           id="input_file"

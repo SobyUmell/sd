@@ -2,11 +2,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { privateRoutes, publicRoutes } from "../../router/index";
-import axios from "axios";
-import { API_URL } from "../../http";
+import AuthService from "../../services/AuthService";
 
 export const AppRouter = () => {
-  const auth = useSelector((state) => state.auth.isAuth);
   const dispatch = useDispatch();
   const setAuth = (value) => {
     dispatch({ type: "SET_AUTH", isAuth: value });
@@ -16,10 +14,9 @@ export const AppRouter = () => {
   };
   const checkAuth = async () => {
     try {
-      const string = API_URL + "/auth/refresh";
-      const response = await axios.post(string, { withCredentials: true });
-      setInfo(response.data.user);
+      const response = await AuthService.checkAuth();
       setAuth(true);
+      setInfo(response.data.user);
     } catch (e) {
       console.log(e.responce?.data?.message);
     }
@@ -31,7 +28,7 @@ export const AppRouter = () => {
       checkAuth();
     }
   }, []);
-
+  const auth = useSelector((state) => state.auth.isAuth);
   return (
     <Routes>
       {auth

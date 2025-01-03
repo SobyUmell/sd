@@ -19,6 +19,7 @@ export const privateRoutes = [
 ];
 export const publicRoutes = [
   { path: "/", component: <Login></Login>, exact: true },
+  { path: "*", component: <Login></Login>, exact: true },
   { path: "/auth-1", component: <Auth1></Auth1>, exact: true },
   { path: "/auth-2", component: <Auth2></Auth2>, exact: true },
   { path: "/auth-3", component: <Auth3></Auth3>, exact: true },
