@@ -10,7 +10,6 @@ import { ellipse } from "../../shared/assets";
 import { geoDataIcon, likeIcon, shareIcon } from "../../shared/assets";
 import { BottomMenu } from "../../widgets";
 
-
 export const MapPage = () => {
   const [open, setOpen] = useState(false);
   const [more, setMore] = useState(false);
@@ -18,7 +17,6 @@ export const MapPage = () => {
   const [orgName, setOrgName] = useState("Organization Name");
   const [type, setType] = useState("undefined");
   const [address, setAddress] = useState("undefined");
-  const [more, setMore] = useState(false);
 
   useEffect(() => {}, [open]); // когда открываем маркер будет подгружаться информация организации
   // I know where you live, your IP and MAC addresses are next
@@ -58,7 +56,6 @@ export const MapPage = () => {
             position={position}
           />
 
-
           <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
           <NavBar style={{ position: "relative", bottom: "63px" }} />
@@ -71,23 +68,21 @@ export const MapPage = () => {
             address={address}
           />
 
-
           <div
             style={{ width: "100%", height: "100%", position: "absolute" }}
             onClick={swap}
           />
           <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-        </MapContainer>
-        <NavBar style={{ position: "relative", bottom: "63px" }} />
-        <BottomMenu
-          open={open}
-          swap={swap}
-          orgName={orgName}
-          orgImage={orgImage}
-          type={type}
-          address={address}
-        />
-          ></Marker>
+
+          <NavBar style={{ position: "relative", bottom: "63px" }} />
+          <BottomMenu
+            open={open}
+            swap={swap}
+            orgName={orgName}
+            orgImage={orgImage}
+            type={type}
+            address={address}
+          />
 
           <div
             style={{ width: "100%", height: "100%", position: "absolute" }}
