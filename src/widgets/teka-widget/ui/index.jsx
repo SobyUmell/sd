@@ -15,7 +15,9 @@ export const TekaWidget = ({
 }) => {
   return (
     <div style={style} className={styles.sliderContainer}>
-      <h2 className={styles.h}>{label}</h2>
+      <h2 className={styles.h}>
+        {label}
+      </h2>
       <Slider {...settings}>
         {postItems.map((value, index) => {
           return (

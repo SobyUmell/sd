@@ -1,10 +1,11 @@
 import { Input, WaveBackground } from "../../shared/ui";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { atsign, lock, smallEye } from "../../shared/assets";
 import styles from "./style.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import AuthService from "../../services/AuthService";
+
 
 export const Login = (props) => {
   const [visible, setVisible] = useState(false);
@@ -56,21 +57,6 @@ export const Login = (props) => {
       console.log(e.responce?.data?.message);
     }
   };
-
-  const logout = async () => {
-    console.log("Попытка выхода");
-    try {
-      const responce = await AuthService.logout();
-      localStorage.removeItem("token");
-      setAuth(false);
-      setEmail("");
-      setPassword("");
-      setInfo({});
-    } catch (e) {
-      console.log(e.responce?.data?.message);
-    }
-  };
-
   return (
     <WaveBackground>
       <div className={styles.wrapper}>
