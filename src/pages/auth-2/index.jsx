@@ -25,8 +25,9 @@ export const Auth2 = () => {
   const registration = async (email, password) => {
     console.log("Попытка регистрации");
     try {
-      const responce = await AuthService.registration(email, password);
-      console.log(responce);
+      const responce1 = await AuthService.registration(email, password);
+      console.log(responce1);
+      console.log(responce2);
       localStorage.setItem("token", responce.data.accessToken);
       setInfo(responce.data.user);
     } catch (e) {

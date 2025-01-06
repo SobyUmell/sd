@@ -4,6 +4,7 @@ import { NavBar, TekaWidget } from "../../widgets";
 import StoryService from "../../services/StoriesService";
 import data from "./data";
 import AuthService from "../../services/AuthService";
+import { useNavigate } from "react-router-dom";
 import styles from "./style.module.scss";
 import {
   atsign,
@@ -39,6 +40,7 @@ export const Profile = () => {
   const setAuth = (value) => {
     dispatch({ type: "SET_AUTH", isAuth: value });
   };
+  const navigate = useNavigate();
   const [flag, setFlag] = useState(false); // длина массива с моими местами
   const nickname = useSelector((state) => state.user.info.username);
   const infoTemp = useSelector((state) => state.user.info);
@@ -60,7 +62,7 @@ export const Profile = () => {
       console.log(responce);
       localStorage.removeItem("token");
       setAuth(false);
-      setEmail("")
+      setEmail("");
     } catch (e) {
       console.log(e.responce?.data?.message);
     }
@@ -90,8 +92,16 @@ export const Profile = () => {
       console.log(responce);
     }
   };
-
+  const registerUser = async()=>{
+    try{
+      const responce = await StoryService.userRegister();
+      console.log(responce);
+    }catch(e){
+      console.log(e.responce?.data?.message);
+    }
+  }
   useEffect(() => {
+    registerUser();
     declareOrganizations();
   }, []);
   return (
@@ -99,6 +109,7 @@ export const Profile = () => {
       <button
         onClick={() => {
           logout();
+          navigate("/");
         }}
         className={styles.logoutButton}
       >
