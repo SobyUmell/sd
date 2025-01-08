@@ -59,15 +59,6 @@ export const MapPage = () => {
 
           <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
-          <NavBar style={{ position: "relative", bottom: "63px" }} />
-          <BottomMenu
-            open={open}
-            swap={swap}
-            orgName={orgName}
-            orgImage={orgImage}
-            type={type}
-            address={address}
-          />
 
           <div
             style={{ width: "100%", height: "100%", position: "absolute" }}
